@@ -2,9 +2,13 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="w-screen bg-primary-500 flex justify-between items-center gap-12 px-[8rem] py-8 text-white">
-      <div>
-        <img src="/media/logoFooter.png" alt="logo" className="w-[90%]" />
+    <footer className="w-screen bg-primary-500 flex md:flex-row flex-col justify-between items-center gap-12 md:px-[8rem] px-10  py-8 text-white">
+      <div className="text-center  flex items-center justify-center">
+        <img
+          src="/media/logoFooter.png"
+          alt="logo"
+          className="md:w-[90%] w-[80%]"
+        />
       </div>
       <div className="text-center  flex items-center justify-center">
         <p className="w-[90%] text-[14px]">
