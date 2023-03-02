@@ -1,9 +1,21 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Quesos from './cardQuesos';
 import Recetas from './cardRecetas';
 import NoticiasCard from './swiperNoticiasCard';
 
 const Home = () => {
+  const router = useRouter();
+  const state = useSelector((s) => s);
+  const [productos, setProductos] = useState();
+  const [recetas, setRecetas] = useState();
+
+  useEffect(() => {
+    setProductos(state.productos);
+    setRecetas(state.recetas);
+  }, [state]);
+
   return (
     <div className="md:pt-[80px] pt-[70px]">
       <div>
@@ -13,8 +25,10 @@ const Home = () => {
         <div className="md:w-[50%] md:h-auto h-[60%]  bg-primary-600 text-white text-center md:px-32 flex flex-col justify-around">
           <h2 className="md:text-[60px] text-[50px] font-bold md:leading-[4rem] leading-[3rem] md:px-10 px-12 ">
             Los más
-            <span className="text-secondary brother-800"> Premiados</span> de la
-            región
+            <br></br>
+            <span className="text-secondary brother-800"> Premiados</span>
+            <br></br>
+            de la región
           </h2>
           <div className="md:block hidden">
             <span className="text-[14px] brother-700">
@@ -43,7 +57,11 @@ const Home = () => {
           </div>
         </div>
         <div className="md:w-[50%] overflow-hidden">
-          <img src="/media/home2.png" alt="home" className="w-full" />
+          <img
+            src="/media/home2.png"
+            alt="home"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
       <div className="md:h-screen h-[80vh] pt-24 ">
@@ -52,18 +70,21 @@ const Home = () => {
             Nuestros quesos
           </h2>
         </div>
-        <div className="flex md:px-[8rem] px-10 gap-8  my-6 md:overflow-auto overflow-x-scroll">
-          {[1, 2, 3, 4].map((q, i) => (
-            <Quesos key={i}></Quesos>
+        <div className=" flex md:grid grid-cols-4 justify-between  md:px-[8rem] px-10 gap-8  my-6 md:overflow-auto overflow-x-scroll py-1">
+          {productos?.slice(0, 4).map((q, i) => (
+            <Quesos key={i} prod={q}></Quesos>
           ))}
         </div>
         <div className="flex justify-center">
-          <button className="text-white md:text-[20px] text-[18px]  bg-primary-500 hover:bg-primary-600 brother-500  border-2 border-primary-500 hover:border-primary-600  rounded-[30px] px-4 py-1 ">
+          <button
+            onClick={() => router.push('/productos')}
+            className="text-white md:text-[20px] text-[18px]  bg-primary-500 hover:bg-primary-600 brother-500  border-2 border-primary-500 hover:border-primary-600  rounded-[30px] px-4 py-1 "
+          >
             Conoce todos nuestros productos
           </button>
         </div>
       </div>
-      <div className="h-screen md:mt-16">
+      <div className=" md:mt-0 mb-20">
         <div className="w-full text-center">
           <h2 className="md:text-[50px] text-[30px] brother-800">
             Últimas novedades
@@ -73,7 +94,10 @@ const Home = () => {
           <NoticiasCard></NoticiasCard>
         </div>
         <div className="flex justify-center">
-          <button className="text-white md:text-[20px] text-[18px]  bg-primary-500 hover:bg-primary-600 brother-500  border-2 border-primary-500 hover:border-primary-600  rounded-[30px] px-4 py-1 ">
+          <button
+            onClick={() => router.push('/novedades')}
+            className="text-white md:text-[20px] text-[18px]  bg-primary-500 hover:bg-primary-600 brother-500  border-2 border-primary-500 hover:border-primary-600  rounded-[30px] px-4 py-1 "
+          >
             Enterate de todas las novedades
           </button>
         </div>
@@ -83,13 +107,16 @@ const Home = () => {
           <h2 className="md:text-[50px] text-[25px] brother-800 text-white text-center">
             Recetas con Lácteos Premium
           </h2>
-          <div className="flex md:px-[8rem] px-10 gap-8  my-6 md:overflow-auto overflow-x-scroll">
-            {[1, 2, 3, 4].map((q, i) => (
+          <div className="flex md:px-[8rem] px-10 gap-8  my-6 md:overflow-auto overflow-x-scroll ">
+            {recetas?.slice(0, 4).map((q, i) => (
               <Recetas key={i}></Recetas>
             ))}
           </div>
           <div className="flex justify-center">
-            <button className="text-primary-500 md:text-[20px] text-[18px]  bg-white hover:bg-[#ece4e4] brother-500  border-2 border-primary-500  rounded-[30px] px-4 py-1 ">
+            <button
+              onClick={() => router.push('/recetas')}
+              className="text-primary-500 md:text-[20px] text-[18px]  bg-white hover:bg-[#ece4e4] brother-500  border-2 border-primary-500  rounded-[30px] px-4 py-1 "
+            >
               Aprende todas nuestras recetas
             </button>
           </div>
